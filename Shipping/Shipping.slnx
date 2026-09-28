@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="../BL/BL.csproj" />
+  <Project Path="../DAL/DAL.csproj" />
+  <Project Path="../Domains/Domains.csproj" />
+  <Project Path="../WebApi/WebApi.csproj" />
+  <Project Path="UI.csproj" />
+</Solution>
