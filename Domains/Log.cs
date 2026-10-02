@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Domains;
 
-public partial class Log
+public partial class Log : BaseTable
 {
     public int Id { get; set; }
 

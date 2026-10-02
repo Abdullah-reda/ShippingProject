@@ -1,3 +1,7 @@
+using Serilog;
+using DAL.DbContext;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddDbContext<ShippingContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingConnection")));
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.MSSqlServer(
+      connectionString: builder.Configuration.GetConnectionString("ShippingConnection"),
+      tableName: "Log",
+      autoCreateSqlTable: true)
+    .CreateLogger();
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
