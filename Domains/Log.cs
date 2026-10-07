@@ -5,7 +5,6 @@ namespace Domains;
 
 public partial class Log : BaseTable
 {
-    public int Id { get; set; }
 
     public string? Message { get; set; }
 

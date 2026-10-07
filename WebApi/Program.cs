@@ -1,6 +1,7 @@
-using Serilog;
+using BL.Mapping;
 using DAL.DbContext;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,12 @@ Log.Logger = new LoggerConfiguration()
       autoCreateSqlTable: true)
     .CreateLogger();
 builder.Host.UseSerilog();
+
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddMaps(typeof(MappingProfile).Assembly);
+});
+
 
 var app = builder.Build();
 
