@@ -28,7 +28,7 @@ namespace DAL.Repositories
         {
             try
             {
-                return _dbSet.ToList();
+                return _dbSet.Where(x => x.CurrentState > 0).ToList();
             }
             catch (Exception ex)
             {
@@ -54,6 +54,7 @@ namespace DAL.Repositories
             try
             {
                 entity.CreatedDate = DateTime.Now;
+                entity.CurrentState = 1;
                 _dbSet.Add(entity);
                 _context.SaveChanges();
 
@@ -65,18 +66,24 @@ namespace DAL.Repositories
 
             }
         }
-
         public bool Update(T entity)
         {
             try
             {
-                var dbDate = GetById(entity.Id);
-                entity.CreatedDate = dbDate.CreatedDate;
-                entity.CreatedBy = dbDate.CreatedBy;
-                dbDate.UpdatedDate = DateTime.Now;
+                var dbEntity = GetById(entity.Id);
 
-                _dbSet.Update(entity);
-                _context.Entry(entity).State = EntityState.Modified;
+                if (dbEntity == null)
+                    return false;
+
+                var createdDate = dbEntity.CreatedDate;
+                var createdBy = dbEntity.CreatedBy;
+
+                _context.Entry(dbEntity).CurrentValues.SetValues(entity);
+
+                dbEntity.CreatedDate = createdDate;
+                dbEntity.CreatedBy = createdBy;
+                dbEntity.UpdatedDate = DateTime.Now;
+
                 _context.SaveChanges();
 
                 return true;
@@ -84,10 +91,8 @@ namespace DAL.Repositories
             catch (Exception ex)
             {
                 throw new DataAccessException(ex, "", _logger);
-   
             }
         }
-
         public bool Delete(Guid id)
         {
             try
@@ -107,14 +112,14 @@ namespace DAL.Repositories
 
             }
         }
-        public bool ChangeStatus(Guid id, int status = 1)
+        public bool ChangeStatus(Guid Id, int status)
         {
             try
             {
-                var entity = GetById(id);
+                var entity = GetById(Id);
                 if (entity != null)
                 {
-                    entity.CurrentState = status;
+                    entity.CurrentState = 0;
                     _context.SaveChanges();
                     return true;
                 }

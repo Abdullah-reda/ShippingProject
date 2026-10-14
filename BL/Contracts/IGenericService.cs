@@ -1,10 +1,13 @@
-﻿using Domains;
+﻿using BL.Dtos.Base;
+using Domains;
 using System;
 using System.Collections.Generic;
 
 namespace BL.Contracts
 {
-    public interface IGenericService<T,DTO>
+    public interface IGenericService<T, DTO>
+    where T : BaseTable
+    where DTO : BaseDto
     {
         IEnumerable<DTO> GetAll();
 

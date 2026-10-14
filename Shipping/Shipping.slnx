@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="../AppResources/AppResources.csproj" Id="c88ea738-87ee-414a-ba5e-104e3defd95f" />
   <Project Path="../BL/BL.csproj" />
   <Project Path="../DAL/DAL.csproj" />
   <Project Path="../Domains/Domains.csproj" />
