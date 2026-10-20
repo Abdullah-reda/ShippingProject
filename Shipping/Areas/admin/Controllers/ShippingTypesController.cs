@@ -3,6 +3,7 @@ using BL.Dtos;
 using DAL.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using UI.Helpers;
 
 namespace UI.Areas.admin.Controllers
 {
@@ -46,32 +47,45 @@ namespace UI.Areas.admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                foreach (var item in ModelState)
-                {
-                    foreach (var error in item.Value.Errors)
-                    {
-                        Console.WriteLine($"{item.Key} : {error.ErrorMessage}");
-                    }
-                }
-
                 return View("Edit", data);
             }
 
-            if (data.Id == Guid.Empty)
+            try
             {
-                _shippingType.Add(data, data.Id);
+                if (data.Id == Guid.Empty)
+                {
+                    _shippingType.Add(data, data.Id);
+                }
+                else
+                {
+                    _shippingType.Update(data, data.Id);
+                }
+                TempData["MessageType"] = MessageType.SaveSuccess;
             }
-            else
+            catch (Exception ex)
             {
-                _shippingType.Update(data, data.Id);
+                TempData["MessageType"] = MessageType.SaveFailed;
             }
-            return RedirectToAction(nameof(Index));
 
+            return RedirectToAction("Index");
         }
-        public IActionResult Delete(Guid Id)
-        { 
-            _shippingType.ChangeStatus(Id, Guid.NewGuid());
-            
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(Guid id)
+        {
+            TempData["MessageType"] = null;
+
+            try
+            {
+                _shippingType.ChangeStatus(id, Guid.NewGuid());
+                TempData["MessageType"] = (int)MessageType.DeleteSuccess;
+            }
+            catch (Exception)
+            {
+                TempData["MessageType"] = (int)MessageType.DeleteFailed;
+            }
+
             return RedirectToAction(nameof(Index));
         }
     }
