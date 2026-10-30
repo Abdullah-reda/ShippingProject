@@ -45,10 +45,6 @@ namespace DAL.DbContext
 
         public virtual DbSet<TbUserSubscription> TbUserSubscriptions { get; set; }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-
-        //    => optionsBuilder.UseSqlServer("Server=DESKTOP-MAFLCS6;Database=Shipping;Trusted_Connection=True;TrustServerCertificate=True;");
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

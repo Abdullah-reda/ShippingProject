@@ -20606,4 +20606,13 @@ footer {
 .horizontal-menu.fixed-on-scroll + .page-body-wrapper {
   padding-top: 58px; }
 
+.country-dropdown {
+    color: #fff;
+    background-color: #191c24;
+}
+
+    .country-dropdown option {
+        color: #fff;
+        background-color: #191c24;
+    }
 /*# sourceMappingURL=style.css.map */

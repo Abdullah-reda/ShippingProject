@@ -1,12 +1,14 @@
 using BL.Contracts;
 using DAL.Contracts;
 using Domains;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shipping.Models;
 using System.Diagnostics;
 
 namespace Shipping.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

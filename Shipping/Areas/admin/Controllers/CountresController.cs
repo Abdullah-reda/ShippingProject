@@ -1,6 +1,7 @@
 ﻿using BL.Contracts;
 using BL.Dtos;
 using DAL.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UI.Helpers;
@@ -8,6 +9,7 @@ using UI.Helpers;
 namespace UI.Areas.admin.Controllers
 {
     [Area("admin")]
+    [Authorize(Roles = "Admin")]
     public class CountresController : Controller
     {
         private readonly ICountry _icountry;

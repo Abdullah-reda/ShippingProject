@@ -4,8 +4,12 @@ using BL.Services;
 using DAL.Contracts;
 using DAL.DbContext;
 using DAL.Repositories;
+using DAL.UserModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Ui.Services;
+
 
 namespace UI
 {
@@ -15,6 +19,26 @@ namespace UI
         {
             builder.Services.AddDbContext<ShippingContext>(options =>
              options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingConnection")));
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.User.RequireUniqueEmail = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            })
+              .AddEntityFrameworkStores<ShippingContext>()
+              .AddDefaultTokenProviders();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromHours(8);
+                options.SlidingExpiration = true;
+            });
 
             Serilog.Log.Logger = new LoggerConfiguration()
               .WriteTo.Console()
@@ -40,6 +64,7 @@ namespace UI
             builder.Services.AddScoped<IUserReceiver, UserReceiverService>();
             builder.Services.AddScoped<IUserSebder, UserSebderService>();
             builder.Services.AddScoped<IUserSubscription, UserSubscriptionService>();
+            builder.Services.AddScoped<IUserService, UserService>();
 
             builder.Services.AddAutoMapper(cfg =>
             {
