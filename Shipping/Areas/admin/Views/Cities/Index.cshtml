@@ -1,91 +1,78 @@
-﻿
-@model List<CityDto>
+﻿@model List<CityDto>
 
 @section Styles
 {
-    <link rel="stylesheet" href="~/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css" />
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" href="~/admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+    <!-- End plugin css for this page -->
 }
 
 <div class="content-wrapper">
     <div class="page-header">
-        <h3 class="page-title">@Labels.Cities</h3>
-
+        <h3 class="page-title"> @Labels.Cities </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">@Labels.Cities</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Data table
-                </li>
+                <li class="breadcrumb-item"><a href="#">@Labels.Cities</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Data table</li>
             </ol>
         </nav>
     </div>
-
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success" role="alert">
             @TempData["SuccessMessage"]
         </div>
     }
-
     <div class="card">
         <div class="card-body">
             <h4 class="card-title"></h4>
-
             <div class="row">
                 <div class="col-12">
-                    <a asp-area="Admin"
-                       asp-controller="Citys"
-                       asp-action="Edit"
-                       class="btn btn-success btn-fw">
-                        @Actions.AddNew
-                    </a>
+                </div>
+                <div class="col-12">
+
+                    <a href="/Admin/Cities/Edit" class="btn btn-success btn-fw">@Actions.AddNew</a>
 
                     <table id="order-listing" class="table table-hover">
                         <thead>
                             <tr>
-                                <th>@Labels.NameAr</th>
-                                <th>@Labels.NameEn</th>
+                                <th>@Labels.NameAr </th>
+                                <th>@Labels.NameEn </th>
+                                <th>@Shipping.CountryName </th>
                                 <th>@Labels.Actions</th>
                             </tr>
                         </thead>
-
                         <tbody>
-                            @foreach (var city in Model)
+                            @foreach (var Citites in Model)
                             {
                                 <tr>
-                                    <td class="col-md-8">
-                                        @city.CityAname
-                                    </td>
+                                    <td class="col-md-8"> @Citites.CityAname</td>
+                                    <td class="col-md-8"> @Citites.CityEname</td>
+                                    <td class="col-md-8"> @Citites.CountryAname</td>
 
-                                    <td class="col-md-8">
-                                        @city.CityEname
-                                    </td>
-
-                                    <td class="col-md-4">
+                                     <td class="col-md-4">
                                         <a asp-area="Admin"
-                                           asp-controller="Citys"
+                                           asp-controller="Cities"
                                            asp-action="Edit"
-                                           asp-route-Id="@city.Id"
+                                           asp-route-Id="@Citites.Id"
                                            class="btn btn-info btn-fw">
                                             @Actions.Edit
                                         </a>
 
                                         <button type="button"
                                                 class="btn btn-danger btn-fw delete-btn"
-                                                data-id="@city.Id">
+                                                data-id="@Citites.Id">
                                             @Actions.Delete
                                         </button>
-                                    </td>
+                                    
                                 </tr>
                             }
+
                         </tbody>
                     </table>
-
-                    <form id="deleteForm"
+                      <form id="deleteForm"
                           asp-area="Admin"
-                          asp-controller="Citys"
+                          asp-controller="Cities"
                           asp-action="Delete"
                           method="post">
                         @Html.AntiForgeryToken()
@@ -99,7 +86,6 @@
         </div>
     </div>
 </div>
-
 @section Scripts
 {
     <script src="~/Admin/vendors/js/vendor.bundle.base.js"></script>
@@ -164,3 +150,4 @@
         </script>
     }
 }
+<!-- content-wrapper ends -->

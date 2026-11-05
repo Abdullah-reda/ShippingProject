@@ -51,11 +51,11 @@ namespace UI
 
 
             builder.Services.AddScoped(typeof(ITableRepository<>), typeof(TableRepository<>));
+            builder.Services.AddScoped(typeof(IViewRepository<>), typeof(ViewRepository<>));
             builder.Services.AddScoped<IShippingType, ShippingTypeService>();
             builder.Services.AddScoped<ICity, CityService>();
             builder.Services.AddScoped<ICountry, CountryService>();
             builder.Services.AddScoped<ICarrier, CarrierService>();
-            builder.Services.AddScoped<ILog, LogService>();
             builder.Services.AddScoped<IPaymentMethod, PaymentMethodService>();
             builder.Services.AddScoped<ISetting, SettingService>();
             builder.Services.AddScoped<IShippment, ShippmentService>();

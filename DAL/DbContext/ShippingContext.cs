@@ -44,6 +44,7 @@ namespace DAL.DbContext
         public virtual DbSet<TbUserSebder> TbUserSebders { get; set; }
 
         public virtual DbSet<TbUserSubscription> TbUserSubscriptions { get; set; }
+        public virtual DbSet<VwCities> VwCities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -228,6 +229,12 @@ namespace DAL.DbContext
                     .HasForeignKey(d => d.PackageId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TbUserSubscriptions_TbSubscriptionPackages");
+            });
+
+            modelBuilder.Entity<VwCities>(entity =>
+            {
+                entity.ToView("VwCities");
+                entity.HasNoKey();
             });
 
             OnModelCreatingPartial(modelBuilder);

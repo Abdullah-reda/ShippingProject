@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Domains;
 
-public partial class Log : BaseTable
+public partial class Log
 {
-
+    public int Id { get; set; }
     public string? Message { get; set; }
 
     public string? MessageTemplate { get; set; }

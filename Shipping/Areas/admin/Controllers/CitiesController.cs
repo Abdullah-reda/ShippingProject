@@ -4,56 +4,36 @@ using Domains;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UI.Helpers;
-using Microsoft.AspNetCore.Mvc.Rendering;
-
-namespace UI.Areas.admin.Controllers
+using static System.Runtime.InteropServices.JavaScript.JSType;
+namespace Ui.Areas.admin.Controllers
 {
     [Area("admin")]
-    [Authorize(Roles = "Admin")]
-    public class CitysController : Controller
+    [Authorize]
+    public class CitiesController : Controller
     {
-        private readonly ICity _icity;
-        private readonly ICountry _icountry;
-        public CitysController(ICity icity, ICountry icountry)
+        private readonly ICity _ICity;
+        private readonly ICountry _ICountry;
+        public CitiesController(ICity ICity, ICountry iCountry)
         {
-            _icity = icity;
-            _icountry = icountry;
+            _ICity = ICity;
+            _ICountry = iCountry;
         }
-        [HttpGet]
         public IActionResult Index()
         {
-            var citys = _icity.GetAll();
-            return View(citys);
-        }
-        private void LoadCountries(Guid? selectedCountryId = null)
-        {
-            var countries = _icountry.GetAll();
-
-            ViewBag.Countries = new SelectList(
-                countries,
-                "Id",
-                "CountryEname",
-                selectedCountryId
-            );
+            var data = _ICity.GitAllCitites();
+            return View(data);
         }
 
-        [HttpGet]
-        public IActionResult Edit(Guid Id)
+        public IActionResult Edit(Guid? Id)
         {
-            if (Id == Guid.Empty)
+            TempData["MessageType"] = null;
+            var data=new BL.Dtos.CityDto();
+            LoadCountries();
+            if (Id != null)
             {
-                LoadCountries();
-                return View(new CityDto());
+                data = _ICity.GetById((Guid)Id);
             }
-
-            var city = _icity.GetById(Id);
-
-            if (city == null)
-                return NotFound();
-
-            LoadCountries(city.CountryId);
-
-            return View(city);
+            return View(data);
         }
 
         [HttpPost]
@@ -62,7 +42,7 @@ namespace UI.Areas.admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                LoadCountries(data.CountryId);
+                LoadCountries();
                 return View("Edit", data);
             }
 
@@ -70,11 +50,11 @@ namespace UI.Areas.admin.Controllers
             {
                 if (data.Id == Guid.Empty)
                 {
-                    _icity.Add(data, data.Id);
+                    _ICity.Add(data, data.Id);
                 }
                 else
                 {
-                    _icity.Update(data, data.Id);
+                    _ICity.Update(data, data.Id);
                 }
                 TempData["MessageType"] = MessageType.SaveSuccess;
             }
@@ -94,7 +74,7 @@ namespace UI.Areas.admin.Controllers
 
             try
             {
-                _icity.ChangeStatus(id, Guid.NewGuid());
+                _ICity.ChangeStatus(id, Guid.NewGuid());
                 TempData["MessageType"] = (int)MessageType.DeleteSuccess;
             }
             catch (Exception)
@@ -103,6 +83,11 @@ namespace UI.Areas.admin.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        void LoadCountries()
+        {
+            ViewBag.Countries = _ICountry.GetAll() ?? Enumerable.Empty<CountryDto>();
         }
     }
 }

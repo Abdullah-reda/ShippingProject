@@ -21,7 +21,7 @@ namespace BL.Services
         public IEnumerable<DTO> GetAll()
         {
             var list = _repository.GetAll();
-            return _mapper.Map<IEnumerable<T>, IEnumerable<DTO>>(list);
+            return _mapper.Map<IEnumerable<T>, IEnumerable<DTO>>(list).ToList();
         }       
 
         public DTO? GetById(Guid id)

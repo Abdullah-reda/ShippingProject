@@ -18,6 +18,8 @@ namespace BL.Dtos
         [EnglishText(ErrorMessage = "Write the name using English characters only")]
         [StringLength(100, MinimumLength = 5, ErrorMessageResourceName = "NameLenght", ErrorMessageResourceType = typeof(Messages))]
         public string? CityEname { get; set; }
+        public string? CountryAname { get; set; }
+        public string? CountryEname { get; set; }
         [Required]
         public Guid CountryId { get; set; }
     }

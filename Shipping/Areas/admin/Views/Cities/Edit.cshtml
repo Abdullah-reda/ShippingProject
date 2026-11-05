@@ -2,7 +2,7 @@
 
 <div class="content-wrapper">
     <div class="page-header">
-        <h3 class="page-title">@Labels.Cities </h3>
+        <h3 class="page-title"> @Labels.Countries </h3>
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="#"></a></li>
@@ -11,19 +11,17 @@
         </nav>
     </div>
 
-    <div asp-validation-summary="All" class="text-danger"></div>
-
     <form class="forms-sample" method="post" enctype="multipart/form-data"
-          asp-controller="Citys" asp-action="Save" role="form">
+          asp-controller="Cities" asp-action="Save" role="form">
         <div class="row">
 
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title">@Labels.Cities</h4>
+                        <h4 class="card-title">@Labels.Countries</h4>
                         <p class="card-description">  </p>
 
-                         <input asp-for="Id" type="hidden" /> 
+                        <input asp-for="Id" type="hidden" />
                         <div class="form-group">
                             <label for="exampleInputUsername1">@Labels.NameAr</label>
                             <input asp-for="CityAname" type="text" class="form-control" placeholder="@Labels.NameAr">
@@ -37,16 +35,11 @@
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="CountryId">@Labels.Countries</label>
-
-                            <select asp-for="CountryId"
-                                    asp-items="ViewBag.Countries"
-                                    class="form-control country-dropdown">
-                                <option value="">-- Select Country --</option>
-                            </select>
-
-                            <span asp-validation-for="CountryId"
-                                  class="text-danger"></span>
+                            <label for="exampleInputUsername1">@Shipping.CountryName</label>
+                            <select asp-for="CountryId" class="form-control"
+                                    asp-items="@(new SelectList(ViewBag.Countries ?? Enumerable.Empty<CountryDto>(), "Id", "CountryAname"))">
+                                </select>
+                            <span asp-validation-for="CityEname" class="text-danger"></span>
                         </div>
 
                         <button type="submit" formmethod="post" class="btn btn-gradient-primary me-2">@Actions.Save</button>
@@ -57,5 +50,4 @@
             </div>
         </div>
     </form>
-</div>   
-
+</div>

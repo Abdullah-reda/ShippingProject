@@ -147,7 +147,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TbCarriers", (string)null);
+                    b.ToTable("TbCarriers");
                 });
 
             modelBuilder.Entity("Domains.TbCity", b =>
@@ -191,7 +191,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("TbCities", (string)null);
+                    b.ToTable("TbCities");
                 });
 
             modelBuilder.Entity("Domains.TbCountry", b =>
@@ -228,7 +228,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TbCountries", (string)null);
+                    b.ToTable("TbCountries");
                 });
 
             modelBuilder.Entity("Domains.TbPaymentMethod", b =>
@@ -268,7 +268,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TbPaymentMethods", (string)null);
+                    b.ToTable("TbPaymentMethods");
                 });
 
             modelBuilder.Entity("Domains.TbSetting", b =>
@@ -278,11 +278,26 @@ namespace DAL.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasDefaultValueSql("(newid())", "DF_TbSetting_Id");
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentState")
+                        .HasColumnType("int");
+
                     b.Property<double?>("KiloMeterRate")
                         .HasColumnType("float");
 
                     b.Property<double?>("KilooGramRate")
                         .HasColumnType("float");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -326,7 +341,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TbShippingTypes", (string)null);
+                    b.ToTable("TbShippingTypes");
                 });
 
             modelBuilder.Entity("Domains.TbShippment", b =>
@@ -403,7 +418,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("ShippingTypeId");
 
-                    b.ToTable("TbShippments", (string)null);
+                    b.ToTable("TbShippments");
                 });
 
             modelBuilder.Entity("Domains.TbShippmentStatus", b =>
@@ -484,7 +499,7 @@ namespace DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TbSubscriptionPackages", (string)null);
+                    b.ToTable("TbSubscriptionPackages");
                 });
 
             modelBuilder.Entity("Domains.TbUserReceiver", b =>
@@ -539,7 +554,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("TbUserReceivers", (string)null);
+                    b.ToTable("TbUserReceivers");
                 });
 
             modelBuilder.Entity("Domains.TbUserSebder", b =>
@@ -594,7 +609,7 @@ namespace DAL.Migrations
 
                     b.HasIndex("CityId");
 
-                    b.ToTable("TbUserSebders", (string)null);
+                    b.ToTable("TbUserSebders");
                 });
 
             modelBuilder.Entity("Domains.TbUserSubscription", b =>
@@ -632,7 +647,47 @@ namespace DAL.Migrations
 
                     b.HasIndex("PackageId");
 
-                    b.ToTable("TbUserSubscriptions", (string)null);
+                    b.ToTable("TbUserSubscriptions");
+                });
+
+            modelBuilder.Entity("Domains.VwCities", b =>
+                {
+                    b.Property<string>("CityAname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CityEname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryAname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryEname")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CountryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentState")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.ToTable((string)null);
+
+                    b.ToView("VwCities", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
