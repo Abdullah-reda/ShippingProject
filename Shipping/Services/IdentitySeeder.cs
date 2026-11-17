@@ -1,7 +1,7 @@
 ﻿using DAL.UserModels;
 using Microsoft.AspNetCore.Identity;
 
-namespace UI
+namespace UI.Services
 {
     public static class IdentitySeeder
     {

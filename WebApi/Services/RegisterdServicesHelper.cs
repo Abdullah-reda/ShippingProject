@@ -8,10 +8,12 @@ using DAL.UserModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Ui.Services;
+using WebApi.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-
-namespace UI
+namespace WebApi.Services
 {
     public class RegisterdServicesHelper
     {
@@ -31,6 +33,41 @@ namespace UI
               .AddEntityFrameworkStores<ShippingContext>()
               .AddDefaultTokenProviders();
 
+           var jwtSettings = builder.Configuration
+             .GetSection("Jwt")
+             .Get<JwtSettings>()
+             ?? throw new InvalidOperationException("JWT settings are missing.");
+
+            if (Encoding.UTF8.GetByteCount(jwtSettings.SecretKey) < 32)
+                throw new InvalidOperationException("JWT SecretKey must be at least 32 bytes.");
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtSettings.Issuer,
+
+                    ValidateAudience = true,
+                    ValidAudience = jwtSettings.Audience,
+
+                    ValidateLifetime = true,
+
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Login";
@@ -40,14 +77,18 @@ namespace UI
                 options.SlidingExpiration = true;
             });
 
-            Serilog.Log.Logger = new LoggerConfiguration()
-              .WriteTo.Console()
-              .WriteTo.MSSqlServer(
-              connectionString: builder.Configuration.GetConnectionString("ShippingConnection"),
-              tableName: "Log",
-              autoCreateSqlTable: true)
-              .CreateLogger();
-              builder.Host.UseSerilog();
+            var loggerConfiguration = new LoggerConfiguration().WriteTo.Console();
+            if (!builder.Environment.IsDevelopment() ||
+                builder.Configuration.GetValue<bool>("Startup:WriteLogsToSql"))
+            {
+                loggerConfiguration.WriteTo.MSSqlServer(
+                    connectionString: builder.Configuration.GetConnectionString("ShippingConnection"),
+                    tableName: "Log",
+                    autoCreateSqlTable: true);
+            }
+
+            Serilog.Log.Logger = loggerConfiguration.CreateLogger();
+            builder.Host.UseSerilog();
 
 
             builder.Services.AddScoped(typeof(ITableRepository<>), typeof(TableRepository<>));
@@ -65,11 +106,16 @@ namespace UI
             builder.Services.AddScoped<IUserSebder, UserSebderService>();
             builder.Services.AddScoped<IUserSubscription, UserSubscriptionService>();
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IJwtService, JwtService>();
+            builder.Services.AddScoped<IRefreshTokens, RefreshTokenService>();
 
             builder.Services.AddAutoMapper(cfg =>
             {
                 cfg.AddMaps(typeof(MappingProfile).Assembly);
             });
+
+            builder.Services.Configure<JwtSettings>(
+             builder.Configuration.GetSection("Jwt"));
 
         }
     }

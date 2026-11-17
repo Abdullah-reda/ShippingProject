@@ -10,7 +10,7 @@ using Domains;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using UI;
+using UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

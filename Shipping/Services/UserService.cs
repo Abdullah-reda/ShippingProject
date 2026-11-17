@@ -70,6 +70,17 @@ namespace Ui.Services
             };
         }
 
+        public async Task<UserDto> GetUserByEmailAsync(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null) return null;
+
+            return new UserDto
+            {
+                Id = Guid.Parse(user.Id),
+                Email = user.Email,
+            };
+        }
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
             var users = _userManager.Users;

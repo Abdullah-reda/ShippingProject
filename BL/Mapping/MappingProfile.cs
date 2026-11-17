@@ -24,6 +24,7 @@ namespace BL.Mapping
             CreateMap<TbUserReceiver, UserReceiverDto>().ReverseMap();
             CreateMap<TbUserSebder, UserSebderDto>().ReverseMap();
             CreateMap<TbUserSubscription, UserSubscriptionDto>().ReverseMap();
+            CreateMap<TbRefreshTokens, RefreshTokenDto>().ReverseMap();
 
         }
     }

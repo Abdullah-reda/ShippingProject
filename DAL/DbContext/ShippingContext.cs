@@ -44,7 +44,13 @@ namespace DAL.DbContext
         public virtual DbSet<TbUserSebder> TbUserSebders { get; set; }
 
         public virtual DbSet<TbUserSubscription> TbUserSubscriptions { get; set; }
+        public virtual DbSet<TbRefreshTokens> TbRefreshTokens { get; set; }
         public virtual DbSet<VwCities> VwCities { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -230,6 +236,22 @@ namespace DAL.DbContext
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TbUserSubscriptions_TbSubscriptionPackages");
             });
+
+            modelBuilder.Entity<TbRefreshTokens>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id).HasDefaultValueSql("NEWID()");
+
+                entity.Property(e => e.CurrentState)
+                    .HasDefaultValue(1)
+                    .IsRequired();
+
+                entity.Property(e => e.CreatedBy).IsRequired();
+                entity.Property(e => e.CreatedDate).IsRequired().HasDefaultValueSql("GETDATE()");
+                entity.Property(e => e.UpdatedDate).HasDefaultValueSql("GETDATE()");
+            });
+
 
             modelBuilder.Entity<VwCities>(entity =>
             {
