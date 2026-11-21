@@ -20,7 +20,7 @@ namespace Shipping.Controllers
         }
         public IActionResult Index()
         {
-            var shippingTypes = _shippingTypeRepository.GetAll();
+    
             return View();
         }
 

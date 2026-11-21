@@ -129,6 +129,9 @@
   <data name="CountryRequired" xml:space="preserve">
     <value>Country is required</value>
   </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>Confirm password is required</value>
+  </data>
   <data name="DeleteFailed" xml:space="preserve">
     <value>Delete failed. Please try again.</value>
   </data>
@@ -147,6 +150,18 @@
   <data name="DeleteSucessMessage" xml:space="preserve">
     <value>Data Deleted Successfully</value>
   </data>
+  <data name="EmailLenght" xml:space="preserve">
+    <value>Email is too long</value>
+  </data>
+  <data name="EmailNotValid" xml:space="preserve">
+    <value>Enter a valid email address</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email is required</value>
+  </data>
+  <data name="FirstNameRequired" xml:space="preserve">
+    <value>First name is required</value>
+  </data>
   <data name="InvalidInput" xml:space="preserve">
     <value>Invalid input.</value>
   </data>
@@ -159,6 +174,9 @@
   <data name="LogoutSuccess" xml:space="preserve">
     <value>Logged out successfully.</value>
   </data>
+  <data name="LastNameRequired" xml:space="preserve">
+    <value>Last name is required</value>
+  </data>
   <data name="NameArRequired" xml:space="preserve">
     <value>Please enter arabic name</value>
   </data>
@@ -166,10 +184,34 @@
     <value>Please enter engliglish name</value>
   </data>
   <data name="NameLenght" xml:space="preserve">
-    <value>Name should be at least 5 characters and maximum 100</value>
+    <value>Name must be between 2 and 50 characters</value>
+  </data>
+  <data name="PasswordLenght" xml:space="preserve">
+    <value>Password must be at least 8 characters</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>Password and confirmation do not match</value>
+  </data>
+  <data name="PasswordNotValid" xml:space="preserve">
+    <value>Password must contain upper, lower, digit and special character</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>Password is required</value>
+  </data>
+  <data name="PhoneLenght" xml:space="preserve">
+    <value>Phone must be between 7 and 20 digits</value>
+  </data>
+  <data name="PhoneNotValid" xml:space="preserve">
+    <value>Enter a valid phone number</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>Phone number is required</value>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>Record not found.</value>
+  </data>
+  <data name="RoleRequired" xml:space="preserve">
+    <value>Role is required</value>
   </data>
   <data name="SaveFailed" xml:space="preserve">
     <value>Save failed. Please try again.</value>

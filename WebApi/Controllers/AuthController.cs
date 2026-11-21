@@ -2,6 +2,7 @@
 using BL.Dtos;
 using BL.Services;
 using DAL.UserModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] UserDto request)
+        public async Task<IActionResult> Login([FromBody] LoginDto request)
         {
             var userResult = await _userService.LoginAsync(request);
             if (!userResult.Success)

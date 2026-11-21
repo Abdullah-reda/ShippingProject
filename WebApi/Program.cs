@@ -2,6 +2,17 @@ using WebApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:7067") // 👈 Your MVC project URL
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials(); // 👈 Required for cookies (refresh token)
+    });
+});
+
 // Services
 builder.Services.AddControllers();
 
@@ -27,7 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 

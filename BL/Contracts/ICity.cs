@@ -9,5 +9,6 @@ namespace BL.Contracts
     public interface ICity : IGenericService<TbCity, CityDto>
     {
         IEnumerable<CityDto> GitAllCitites();
+        IEnumerable<CityDto> GetByCountry(Guid countryId);
     }
 }

@@ -14,6 +14,12 @@
               </nav>
             </div>
             <div class="row">
+
+                   <div class="col-md-4 stretch-card grid-margin">
+            <button onclick="getWeather()">Get Weather</button>
+            <div id="weatherResult"></div>
+
+
               <div class="col-md-7 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
@@ -324,4 +330,77 @@
                 </div>
               </div>
             </div>
-          </div>
+</div
+
+@section Scripts
+{
+    <script>
+        // 🔧 Helper to read access token from cookie
+        function getCookie(name) {
+            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : null;
+        }
+
+        // ✅ Main function to call the weather API
+        function getWeather() {
+            const accessToken = getCookie('AccessToken');
+
+            if (!accessToken) {
+                alert("Access token not found. Please log in.");
+                return;
+            }
+
+            $.ajax({
+                url: 'https://localhost:7125/weatherforecast',
+                type: 'GET',
+                xhrFields: {
+                withCredentials: true
+                },
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                success: function (data) {
+                    $('#weatherResult').html(JSON.stringify(data));
+                },
+                error: function (xhr) {
+                    alert("error");
+                    if (xhr.status === 401) {
+                        // ⛔ Access token might be expired → try refresh
+                        refreshAccessToken(function (success) {
+                            if (success) {
+                                // 🔄 Retry original request
+                                getWeather();
+                            } else {
+                                alert("Session expired. Please log in again.");
+                            }
+                        });
+                    } else {
+                        alert("Error: " + xhr.statusText);
+                    }
+                }
+            });
+        }
+
+        function refreshAccessToken(callback) {
+            $.ajax({
+                url: 'https://localhost:7125/api/auth/refresh-access-token', // should be POST
+                type: 'POST',
+                xhrFields: {
+                    withCredentials: true //
+                },
+                success: function (data) {
+                    if (data.accessToken) {
+                        // Save new token in cookie (can also update UI)
+                        document.cookie = `AccessToken=${data.accessToken}; path=/; max-age=900;`;
+                        callback(true);
+                    } else {
+                        callback(false);
+                    }
+                },
+                error: function () {
+                    callback(false);
+                }
+            });
+        }
+    </script>
+}

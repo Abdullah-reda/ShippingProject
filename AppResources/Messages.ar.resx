@@ -129,6 +129,9 @@
   <data name="CountryRequired" xml:space="preserve">
     <value>الدولة مطلوبة</value>
   </data>
+  <data name="ConfirmPasswordRequired" xml:space="preserve">
+    <value>تأكيد الباسورد مطلوب</value>
+  </data>
   <data name="DeleteFailed" xml:space="preserve">
     <value>فشل في الحذف. يرجى المحاولة مرة أخرى.</value>
   </data>
@@ -147,6 +150,18 @@
   <data name="DeleteSucessMessage" xml:space="preserve">
     <value>تم حذف البيانات بنجاح</value>
   </data>
+  <data name="EmailLenght" xml:space="preserve">
+    <value>الإيميل طويل جداً</value>
+  </data>
+  <data name="EmailNotValid" xml:space="preserve">
+    <value>ادخل إيميل صحيح</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>الإيميل مطلوب</value>
+  </data>
+  <data name="FirstNameRequired" xml:space="preserve">
+    <value>الاسم الأول مطلوب</value>
+  </data>
   <data name="InvalidInput" xml:space="preserve">
     <value>إدخال غير صالح.</value>
   </data>
@@ -159,6 +174,9 @@
   <data name="LogoutSuccess" xml:space="preserve">
     <value>تم تسجيل الخروج بنجاح.</value>
   </data>
+  <data name="LastNameRequired" xml:space="preserve">
+    <value>الاسم الأخير مطلوب</value>
+  </data>
   <data name="NameArRequired" xml:space="preserve">
     <value>من فضلك ادخل الاسم العربي</value>
   </data>
@@ -166,10 +184,34 @@
     <value>من فضلك ادخل الاسم الانجليزي</value>
   </data>
   <data name="NameLenght" xml:space="preserve">
-    <value>الاسم يجب ان يكون على الاقل 5 احرف و لا يزيد عن 100</value>
+    <value>الاسم يجب ان يكون بين 2 و 50 حرف</value>
+  </data>
+  <data name="PasswordLenght" xml:space="preserve">
+    <value>الباسورد يجب ان يكون 8 حروف على الأقل</value>
+  </data>
+  <data name="PasswordNotMatch" xml:space="preserve">
+    <value>الباسورد والتأكيد مش متطابقين</value>
+  </data>
+  <data name="PasswordNotValid" xml:space="preserve">
+    <value>الباسورد يجب ان يحتوي على حرف كبير وحرف صغير ورقم ورمز خاص</value>
+  </data>
+  <data name="PasswordRequired" xml:space="preserve">
+    <value>الباسورد مطلوب</value>
+  </data>
+  <data name="PhoneLenght" xml:space="preserve">
+    <value>رقم التليفون لازم يكون بين 7 و 20 رقم</value>
+  </data>
+  <data name="PhoneNotValid" xml:space="preserve">
+    <value>ادخل رقم تليفون صحيح</value>
+  </data>
+  <data name="PhoneRequired" xml:space="preserve">
+    <value>رقم التليفون مطلوب</value>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>السجل غير موجود.</value>
+  </data>
+  <data name="RoleRequired" xml:space="preserve">
+    <value>الدور مطلوب</value>
   </data>
   <data name="SaveFailed" xml:space="preserve">
     <value>فشل في الحفظ. يرجى المحاولة مرة أخرى.</value>

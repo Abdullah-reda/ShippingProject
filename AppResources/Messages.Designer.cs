@@ -311,5 +311,89 @@ namespace AppResources {
                 return ResourceManager.GetString("UpdateSuccess", resourceCulture);
             }
         }
+
+        public static string ConfirmPasswordRequired {
+            get {
+                return ResourceManager.GetString("ConfirmPasswordRequired", resourceCulture);
+            }
+        }
+
+        public static string EmailLenght {
+            get {
+                return ResourceManager.GetString("EmailLenght", resourceCulture);
+            }
+        }
+
+        public static string EmailNotValid {
+            get {
+                return ResourceManager.GetString("EmailNotValid", resourceCulture);
+            }
+        }
+
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
+            }
+        }
+
+        public static string FirstNameRequired {
+            get {
+                return ResourceManager.GetString("FirstNameRequired", resourceCulture);
+            }
+        }
+
+        public static string LastNameRequired {
+            get {
+                return ResourceManager.GetString("LastNameRequired", resourceCulture);
+            }
+        }
+
+        public static string PasswordLenght {
+            get {
+                return ResourceManager.GetString("PasswordLenght", resourceCulture);
+            }
+        }
+
+        public static string PasswordNotMatch {
+            get {
+                return ResourceManager.GetString("PasswordNotMatch", resourceCulture);
+            }
+        }
+
+        public static string PasswordNotValid {
+            get {
+                return ResourceManager.GetString("PasswordNotValid", resourceCulture);
+            }
+        }
+
+        public static string PasswordRequired {
+            get {
+                return ResourceManager.GetString("PasswordRequired", resourceCulture);
+            }
+        }
+
+        public static string PhoneLenght {
+            get {
+                return ResourceManager.GetString("PhoneLenght", resourceCulture);
+            }
+        }
+
+        public static string PhoneNotValid {
+            get {
+                return ResourceManager.GetString("PhoneNotValid", resourceCulture);
+            }
+        }
+
+        public static string PhoneRequired {
+            get {
+                return ResourceManager.GetString("PhoneRequired", resourceCulture);
+            }
+        }
+
+        public static string RoleRequired {
+            get {
+                return ResourceManager.GetString("RoleRequired", resourceCulture);
+            }
+        }
     }
 }

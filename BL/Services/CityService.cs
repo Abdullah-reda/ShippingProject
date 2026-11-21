@@ -22,7 +22,12 @@ namespace BL.Services
 
         public IEnumerable<CityDto> GitAllCitites()
         {
-            var cities = _Viewrepo.GetAll().Where(a => a.CurrentState >= 1).ToList();
+            var cities = _Viewrepo.GetList(a => a.CurrentState >= 1).ToList();
+            return _mapper.Map<IEnumerable<VwCities>, IEnumerable<CityDto>>(cities).ToList();
+        }
+        public IEnumerable<CityDto> GetByCountry(Guid countryId)
+        {
+            var cities = _Viewrepo.GetList(a => a.CurrentState >= 1 && a.CountryId == countryId).ToList();
             return _mapper.Map<IEnumerable<VwCities>, IEnumerable<CityDto>>(cities).ToList();
         }
     }
